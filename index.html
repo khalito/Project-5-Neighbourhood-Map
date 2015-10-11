@@ -2,36 +2,55 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Whisky distilleries on Islay</title>
+	<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/styles.css">
+	
 </head>
 
 <body>
-	<div id="title">Whisky distilleries on Islay</div>
-	
-	<div id="search">
+	<div class="container-fluid">
+		<div class="row">
+			<h1 id="title" class="col-xs-12 col-sm-12 col-md-12">Whisky distilleries on Islay</h1>
+		</div>
+		
+		<div class="row">
 
-	    <!-- Here is the search box -->
-	    <input id="searchBar" autofocus placeholder="Search…" type="search" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
+			<div id="search" class="col-xs-12 col-sm-12 col-md-4">
 
-		<!-- And here is my list of places, using the knockout template binding -->
-		<ul data-bind="template: {name:'placesTemplate', foreach:distilleries}"></ul>
+				<div class="btn-group" id="dropdown">
+					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <span class="caret"></span>
+					</button>
 
-		<script type="text/html" id="placesTemplate">
-		  <li class="distilleryBullet">
-		    <span class="distilleryTitle" data-bind="text: name, click: activateMarker"></span><br>
+					<ul class="dropdown-menu" data-bind="template: {name:'placesTemplate', foreach:distilleries}"></ul>
+					
+					<script type="text/html" id="placesTemplate">
 
-		    Meaning: <span data-bind="text: meaning"></span><br>
-		    
-		    Flavour: <span data-bind="text: flavour"></span>
-		  </li>
-		</script>
+					<li class="distilleryTitle" data-bind="text: name, click: activateMarker"></li>
+					</script>
+
+				</div>
+
+			    <!-- Here is the search box -->
+			    <input id="searchBar" autofocus placeholder="Search…" type="search" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
+
+				<!-- And here is my list of places, using the knockout template binding -->
+				<ul id="distilleryList" data-bind="template: {name:'placesTemplate', foreach:distilleries}"></ul>
+
+				<script type="text/html" id="placesTemplate">
+				  <li class="distilleryBullet">
+				    <span class="distilleryTitle" data-bind="text: name, click: activateMarker"></span>
+				  </li>
+				</script>
+			</div>
+		 
+		 	<div id="map" class="col-xs-12 col-sm-12 col-md-8">Map</div>
+
+		</div>
+
 	</div>
- 
- 	<div id="map">Map</div>
-
- 	<div id="wikipedia-links"></div>
-
+ 	
  	<!-- Load google map api -->
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPUbbZh4fnJGK8bHkN-r6ayDVi8HbYUo8"></script>
 
@@ -43,7 +62,9 @@
         (window.ko || document.write('<script src="bower_components/knockout/dist/knockout.js"><\/script>'));
     </script>
 
-	<script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+	<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+
+	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
 	<script type="text/javascript" src="js/app.js"></script>
 
