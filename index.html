@@ -3,7 +3,7 @@
 
 <head>
     <title>Whisky distilleries on Islay</title>
-    
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -22,21 +22,11 @@
 
             <div id="search" class="col-xs-12 col-sm-12 col-md-4">
 
-                <div class="btn-group" id="dropdown">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <span class="caret"></span>
-                    </button>
-
-                    <ul class="dropdown-menu" data-bind="template: {name:'placesTemplate', foreach:distilleries}"></ul>
-
-                    <script type="text/html" id="placesTemplate">
-
-                        <li class="distilleryTitle" data-bind="text: name, click: activateMarker"></li>
-                    </script>
-
-                </div>
-
                 <!-- Here is the search box -->
-                <input id="searchBar" autofocus placeholder="Search…" type="search" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
+                <div class="input-group">
+                      <span class="input-group-addon" id="basic-addon1">Search</span>
+                    <input id="searchBar" class="form-control" aria-describedby="basic-addon1" autofocus type="text" data-bind="textInput: query" autocomplete="off">
+                </div>
 
                 <!-- And here is my list of places, using the knockout template binding -->
                 <ul id="distilleryList" data-bind="template: {name:'placesTemplate', foreach:distilleries}"></ul>

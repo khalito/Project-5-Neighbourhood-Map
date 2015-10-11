@@ -20,9 +20,12 @@ How to run the web pages
 ========================
 
 ###View the pages locally on your desktop
-1. Download my git repository (see link above) as a zip file and unzip it to your favorite local folder
-2. Open the index.html in that folder with your favorite web browser
-3. Click on any of the markers on the map to see the distillery's name and a link to its Wikipedia article. Alternatively, click on one of the names in the list on the left hand side to let the page show you where this particular distillery is located on the map.
-4. You can search through the list of distilleries by typing in a name in the search box above the list on the left hand side.
+1. Download my git repository (see link above) as a zip file and unzip
+
+2. Open a terminal emulator and navigate to the unzipped folder. In the terminal, run "bower install" (Note: You can install bower from [here](http://bower.io/) if you do not already have it)
+
+3. Open the index.html file with your favorite web browser
+
+4. Click on any of the markers on the map to see the distillery's name, the name's meaning and a link to a related Wikipedia article. Alternatively, click on one of the names in the under the search bar to let the page show you where this particular distillery is located on the map. You can also search through the list of distilleries by typing in a name in the search box.
 
 

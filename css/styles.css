@@ -24,6 +24,7 @@ h1 {
 #search {
     padding-left: 0px;
     padding-right: 0px;
+    margin-bottom: 10px;
 }
 
 .distilleryTitle {
@@ -38,11 +39,7 @@ h1 {
 }
 
 .distilleryBullet {
-    padding-top: 1.5em;
-}
-
-#dropdown {
-    display: none;
+    padding-top: 0.5em;
 }
 
 @media screen and (min-width: 1200px) {
@@ -61,10 +58,6 @@ h1 {
     #dropdown {
         display: block;
         margin: 0px auto;
-    }
-
-    #searchBar, #distilleryList {
-        display: none;
     }
 
     #map {

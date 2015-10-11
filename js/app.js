@@ -79,14 +79,8 @@ var Distillery = function(data) {
   this.meaning = ko.observable(data.meaning);
   this.flavour = ko.observable(data.flavour);
   this.pos = ko.observable(data.pos);
-
-  var marker = new google.maps.Marker({
-    position: this.pos(),
-    title: this.name(),
-    map: map
-  });
-
-  this.marker = ko.observable(marker);
+  this.marker = ko.observable();
+  this._destroy = ko.observable(false);
 };
 
 
@@ -148,11 +142,14 @@ var viewModel = function() {
             for (var i = 0; i < articleList.length; i++) {
               var articleStr = articleList[i];
               var url = 'http://en.wikipedia.org/wiki/' + articleStr;
-              var content = '<a href="' + url + '">' + articleStr + '</a>';
+              var content = '<a target="_blank" href="' + url + '">' + articleStr + '</a>' + '<br>' + '<i>' + '"' + item.meaning() + '"' + '</i>';
               infoWindow.setContent(content);
               infoWindow.open(map, item.marker());
               item.marker().setAnimation(google.maps.Animation.BOUNCE);
             }
+          },
+          error: function(error) {
+            alert("Oops! We could not get any wikipedia entries for this distillery. We will try to fix this. Please try again later.");
           }
         });
         setTimeout(function() {
@@ -167,26 +164,17 @@ var viewModel = function() {
 
 
   this.search = function(value) {
-    // Set map on all markers to 'null' so that they disappear from the map
     self.distilleries().forEach(function(distillery) {
-      distillery.marker().setMap(null);
-    });
+      distillery.marker().setVisible(false); // Hide the map markers
+      distillery._destroy(true); // Hide the location in the list view
 
-    // Remove all distilleries from the observable array (but not
-    // from the initial model array)
-    self.distilleries([]);
-
-    // Loop through each place in the initial model array and add the
-    // matching ones back into the observable array and
-    // add make all markers clickable again
-    for(var i = 0; i < model.length; i++) {
-      if(model[i].name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
-        self.distilleries.push(new Distillery(model[i]));
+      // Does the distillery name contain the search term?
+      if (distillery.name().toLowerCase().indexOf(value.toLowerCase()) >=0 ) {
+        distillery.marker().setVisible(true); // Show the map marker
+        distillery._destroy(false); // Show the location in the list view
       }
-    }
-    self.makeClickable();
+    });
   };
-
 
   // Run the search function whenever the value of query changes
   this.query.subscribe(self.search);
@@ -201,26 +189,7 @@ var viewModel = function() {
 // Each time you click on the name of a distillery, make its marker bounce
 // Bind this function to the <li> items on the page
 function activateMarker(item) {
-  var url = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + item.wikiName() + '&format=json&callback=wikiCallback';
-
-  $.ajax({
-    url: url,
-    dataType: "jsonp",
-    success: function (response) {
-      var articleList = response[1];
-      for (var i = 0; i < articleList.length; i++) {
-        var articleStr = articleList[i];
-        var url = 'http://en.wikipedia.org/wiki/' + articleStr;
-        var content = '<a href="' + url + '">' + articleStr + '</a>';
-        infoWindow.setContent(content);
-        infoWindow.open(map, item.marker());
-        item.marker().setAnimation(google.maps.Animation.BOUNCE);
-      }
-    }
-  });
-  setTimeout(function() {
-    item.marker().setAnimation(null);
-  }, 2100);
+  google.maps.event.trigger(item.marker(), 'click');
 }
 
 ko.applyBindings(new viewModel());
