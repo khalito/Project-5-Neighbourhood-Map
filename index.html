@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Whisky distilleries on Islay</title>
+	<link rel="stylesheet" type="text/css" href="css/styles.css">
+</head>
+
+<body>
+	<div id="title">Whisky distilleries on Islay</div>
+	
+	<div id="search">
+
+	    <!-- Here is the search box -->
+	    <input id="searchBar" autofocus placeholder="Search…" type="search" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
+
+		<!-- And here is my list of places, using the knockout template binding -->
+		<ul data-bind="template: {name:'placesTemplate', foreach:distilleries}"></ul>
+
+		<script type="text/html" id="placesTemplate">
+		  <li class="distilleryBullet">
+		    <span class="distilleryTitle" data-bind="text: name, click: activateMarker"></span><br>
+
+		    Meaning: <span data-bind="text: meaning"></span><br>
+		    
+		    Flavour: <span data-bind="text: flavour"></span>
+		  </li>
+		</script>
+	</div>
+ 
+ 	<div id="map">Map</div>
+
+ 	<div id="wikipedia-links"></div>
+
+ 	<!-- Load google map api -->
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPUbbZh4fnJGK8bHkN-r6ayDVi8HbYUo8"></script>
+
+    <!-- Load knockout.js through the Cloudfare CDN -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
+
+    <!-- Fallback to loading knockout from a local path if the CDN is unavailable-->
+    <script>
+        (window.ko || document.write('<script src="bower_components/knockout/dist/knockout.js"><\/script>'));
+    </script>
+
+	<script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+
+	<script type="text/javascript" src="js/app.js"></script>
+
+</body>
+</html>

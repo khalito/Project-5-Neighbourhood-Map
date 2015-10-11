@@ -1,0 +1,20 @@
+{
+  "name": "Project-5-Neighbourhood-Map",
+  "version": "1.0.0",
+  "description": "A map of whisky distilleries on the island of Islay (UK)",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "knockout": "~3.3.0"
+  }
+}
