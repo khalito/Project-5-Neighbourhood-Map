@@ -10,8 +10,10 @@ h1 {
     font-family: serif;
 }
 
-#searchBar {
-    font-size: 1em;
+#dropdownMenu1 {
+    font-size: 3em;
+    font-family: serif;
+    background:transparent;
 }
 
 #map {
@@ -21,26 +23,15 @@ h1 {
     padding-right: 15px;
 }
 
-#search {
-    padding-left: 0px;
-    padding-right: 0px;
-    margin-bottom: 10px;
-}
-
-.distilleryTitle {
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 1.2em;
+.attribute-title {
+    font-size: 1.5em;
     text-decoration: underline;
+    padding-top: 2em;
 }
 
-.distilleryTitle:hover {
-    color: blue;
-    text-decoration: underline;
-}
-
-.distilleryBullet {
-    padding-top: 0.5em;
+.attribute-value {
+    font-size: 1.5em;
+    font-style: italic;
 }
 
 @media screen and (min-width: 1200px) {
@@ -65,12 +56,15 @@ h1 {
         margin: 0px auto;
         width: 100%;
     }
+    #dropdownMenu1 {
+        font-size: 1.5em;
+    }
 }
 
 @media screen and (max-width: 768px) {
     h1 {
         font-size: 2em;
-    };
+    }
 }
 
 @media screen and (max-width: 480px) {
@@ -84,5 +78,13 @@ h1 {
 
     #map {
         height: 300px;
+    }
+
+    #dropdownMenu1 {
+    font-size: 1em;
+    }
+
+    #logo {
+        visibility: hidden;
     }
 }

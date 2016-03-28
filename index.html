@@ -20,22 +20,16 @@
 
         <div class="row">
 
-            <div id="search" class="col-xs-12 col-sm-12 col-md-4">
+            <div id="dropdown" class="dropdown col-xs-12 col-sm-6 col-md-4">
 
-                <!-- Here is the search box -->
-                <div class="input-group">
-                      <span class="input-group-addon" id="basic-addon1">Search</span>
-                    <input id="searchBar" class="form-control" aria-describedby="basic-addon1" autofocus type="text" data-bind="textInput: query" autocomplete="off">
-                </div>
+                <select class="btn btn-default dropdown-toggle" type="button"  id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" data-bind="options: optionValues, value: selectedOptionValue"></select>
+                <div class="attribute-title">Meaning:</div>
+                <div class="attribute-value" data-bind="text: selectedDistilleryDescription"></div>
+                <div class="attribute-title">Flavour:</div>
+                <div class="attribute-value" data-bind="text: selectedDistilleryFlavour"></div>
+                <br>
 
-                <!-- And here is my list of places, using the knockout template binding -->
-                <ul id="distilleryList" data-bind="template: {name:'placesTemplate', foreach:distilleries}"></ul>
-
-                <script type="text/html" id="placesTemplate">
-                    <li class="distilleryBullet">
-                        <span class="distilleryTitle" data-bind="text: name, click: activateMarker"></span>
-                    </li>
-                </script>
+                <img id="logo" data-bind="attr:{src: imagePath}" />
             </div>
 
             <div id="map" class="col-xs-12 col-sm-12 col-md-8">Map</div>

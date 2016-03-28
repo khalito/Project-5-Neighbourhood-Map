@@ -7,25 +7,12 @@
 */
 var model = [
   {
-    name:"Laphroaig",
-    wikiName: "Laphroaig distillery",
-    meaning: "Beautiful hollow by the broad bay",
-    flavour: "Sweet, spicy and very smoky",
-    pos: {lat: 55.630210, lng: -6.153477},
-  },
-  {
-    name:"Lagavulin distillery",
-    wikiName: "Lagavulin distillery",
-    meaning: "The hollow where the mill is",
-    flavour: "Rich, sweet and very smokey",
-    pos: {lat: 55.636412, lng: -6.126869},
-  },
-  {
     name:"Ardbeg",
     wikiName: "Ardbeg distillery",
     meaning: "Small headland",
     flavour: "Peaty, medicinal, salty, dry",
     pos: {lat: 55.640867, lng: -6.108166},
+    img: "images/ardbeg.jpg",
   },
   {
     name:"Bowmore",
@@ -33,6 +20,7 @@ var model = [
     meaning: "Great sea reef or sea rock",
     flavour: "Smoky and floral in style",
     pos: {lat: 55.758693, lng: -6.291493},
+    img: "images/bowmore.png",
   },
   {
     name:"Bruichladdich",
@@ -40,6 +28,7 @@ var model = [
     meaning: "Bank on the shore",
     flavour: "Large spectrum of peated and unpeated whiskies",
     pos: {lat: 55.765647, lng: -6.360844},
+    img: "images/bruichladdich.jpg",
   },
   {
     name:"Bunnahabhain",
@@ -47,6 +36,7 @@ var model = [
     meaning: "Mouth of the river",
     flavour: "Sweet and lightly fruity and sometimes a whiff of peat smoke",
     pos: {lat: 55.884444, lng: -6.146610},
+    img: "images/bunnahabhain.jpg",
   },
   {
     name:"Caol Ila",
@@ -54,6 +44,7 @@ var model = [
     meaning: "The straight of Islay",
     flavour: "Smoky, sweet and lightly fruity",
     pos: {lat: 55.854280, lng: -6.109382},
+    img: "images/caolila.png",
   },
   {
     name:"Kilchoman",
@@ -61,6 +52,23 @@ var model = [
     meaning: "St. Comman's church",
     flavour: "A rich spirit, sweet, fruity and lightly smoky",
     pos: {lat: 55.787041, lng: -6.430006},
+    img: "images/kilchoman.png",
+  },
+  {
+    name:"Lagavulin",
+    wikiName: "Lagavulin distillery",
+    meaning: "The hollow where the mill is",
+    flavour: "Rich, sweet and very smokey",
+    pos: {lat: 55.636412, lng: -6.126869},
+    img: "images/lagavulin.jpg",
+  },
+  {
+    name:"Laphroaig",
+    wikiName: "Laphroaig distillery",
+    meaning: "Beautiful hollow by the broad bay",
+    flavour: "Sweet, spicy and very smoky",
+    pos: {lat: 55.630210, lng: -6.153477},
+    img: "images/laphroaig.jpg",
   }
 ];
 
@@ -79,11 +87,14 @@ var Distillery = function(data) {
   this.meaning = ko.observable(data.meaning);
   this.flavour = ko.observable(data.flavour);
   this.pos = ko.observable(data.pos);
+  this.img = ko.observable(data.img);
   this.marker = ko.observable();
   this._destroy = ko.observable(false);
 };
 
-
+var dropDown = function(data) {
+  this.name = ko.observable(data.name);
+};
 
 /*
 *
@@ -159,25 +170,33 @@ var viewModel = function() {
     }); // end of forEach()
   }; // end of makeClickable()
 
-  // Our search string, bound to the value of the search box on the page
-  this.query = ko.observable('');
+/*
+*
+* Drop down menu
+*
+*/
+  // Create optionValues Array
+  this.optionValues = ko.observableArray([]);
+  // Push distillery names into the Array
+  model.forEach(function(distilleryItem) {
+    self.optionValues.push(distilleryItem.name);
+  });
 
+  this.selectedOptionValue = ko.observable();
+  this.selectedDistilleryDescription = ko.observable();
+  this.selectedDistilleryFlavour = ko.observable();
+  this.imagePath = ko.observable();
 
-  this.search = function(value) {
-    self.distilleries().forEach(function(distillery) {
-      distillery.marker().setVisible(false); // Hide the map markers
-      distillery._destroy(true); // Hide the location in the list view
-
-      // Does the distillery name contain the search term?
-      if (distillery.name().toLowerCase().indexOf(value.toLowerCase()) >=0 ) {
-        distillery.marker().setVisible(true); // Show the map marker
-        distillery._destroy(false); // Show the location in the list view
-      }
+  this.selectedOptionValue.subscribe(function(value) {
+    self.distilleries().forEach(function(item) {
+        if (item.name() == value) {
+          activateMarker(item);
+          self.selectedDistilleryDescription('"'+item.meaning()+'"');
+          self.selectedDistilleryFlavour(item.flavour());
+          self.imagePath(item.img());
+        };
     });
-  };
-
-  // Run the search function whenever the value of query changes
-  this.query.subscribe(self.search);
+  })
 
   // Initialise the map, the markers and make them clickable
   this.initializeMap();
